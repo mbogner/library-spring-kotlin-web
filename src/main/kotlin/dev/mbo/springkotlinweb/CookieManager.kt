@@ -27,6 +27,7 @@ object CookieManager {
 
     fun <T> update(
         value: T?,
+        request: HttpServletRequest,
         response: HttpServletResponse,
         cookieName: String,
         serializer: (T) -> String,
@@ -36,6 +37,8 @@ object CookieManager {
         val cookie = Cookie(cookieName, cookieValue)
         cookie.path = "/"              // Cookie is valid for the entire site
         cookie.isHttpOnly = true       // Cannot be accessed via JavaScript
+        cookie.secure = request.isSecure
+        cookie.setAttribute("SameSite", "Strict")
         cookie.maxAge = if (value == null) 0 else validity
         response.addCookie(cookie)
     }
