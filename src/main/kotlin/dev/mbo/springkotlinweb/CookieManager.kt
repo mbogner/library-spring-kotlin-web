@@ -43,6 +43,19 @@ object CookieManager {
         response.addCookie(cookie)
     }
 
+    private fun clear(
+        request: HttpServletRequest,
+        response: HttpServletResponse,
+        cookieName: String
+    ) {
+        val cookie = Cookie(cookieName, null)
+        cookie.path = "/"
+        cookie.isHttpOnly = true
+        cookie.secure = request.isSecure
+        cookie.maxAge = 0
+        response.addCookie(cookie)
+    }
+
     // ======== Predefined Parsers ========
     val uuidParser: (String) -> UUID = UUID::fromString
     val stringParser: (String) -> String = { it }
