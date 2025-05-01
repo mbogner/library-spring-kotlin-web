@@ -43,7 +43,7 @@ object CookieManager {
         response.addCookie(cookie)
     }
 
-    private fun clear(
+    fun clear(
         request: HttpServletRequest,
         response: HttpServletResponse,
         cookieName: String
